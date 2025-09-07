@@ -33,7 +33,7 @@ This web application provides an intuitive platform for generating QR codes from
 ## Getting Started
 
 ### Live Demo
-Visit the live application at: `https://your-domain.com`
+Visit the live application at: `[https://your-domain.com`](https://hadia-codes.github.io/QR-generator/)
 
 ### Local Setup
 1. Clone the repository
@@ -156,8 +156,4 @@ We welcome contributions to enhance this QR code generator:
 2. Create your feature branch
 3. Submit a pull request with detailed description
 
-## License
 
-This project is open-source under the MIT License, encouraging widespread adoption and modification.
-
-**Transform any link into an instant, scannable QR code with professional quality and modern design.**
