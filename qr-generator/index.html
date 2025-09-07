@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>QR Code Generator</h1>
+            
+        </header>
+
+        <main class="main-content">
+            <div class="input-section">
+                <div class="input-type-selector">
+                    <label for="input-type">Content Type:</label>
+                    <select id="input-type">
+                        <option value="url">Website URL</option>
+                        <option value="text">Plain Text</option>
+                        <option value="image">Image Link</option>
+                        <option value="vcard">Contact Info (vCard)</option>
+                        <option value="wifi">Wi-Fi Credentials</option>
+                    </select>
+                </div>
+
+                <!-- URL Input -->
+                <div class="input-form" id="url-form">
+                    <label for="url-input">Website URL:</label>
+                    <input type="url" id="url-input" placeholder="https://example.com">
+                </div>
+
+                <!-- Text Input -->
+                <div class="input-form" id="text-form" style="display: none;">
+                    <label for="text-input">Text Content:</label>
+                    <textarea id="text-input" placeholder="Enter your text here..."></textarea>
+                </div>
+
+                <!-- Image Link Input -->
+                <div class="input-form" id="image-form" style="display: none;">
+                    <label for="image-input">Image URL:</label>
+                    <input type="url" id="image-input" placeholder="https://example.com/image.jpg">
+                </div>
+
+                <!-- vCard Input -->
+                <div class="input-form" id="vcard-form" style="display: none;">
+                    <div class="form-grid">
+                        <div>
+                            <label for="vcard-name">Full Name:</label>
+                            <input type="text" id="vcard-name" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label for="vcard-phone">Phone:</label>
+                            <input type="tel" id="vcard-phone" placeholder="+1234567890">
+                        </div>
+                        <div>
+                            <label for="vcard-email">Email:</label>
+                            <input type="email" id="vcard-email" placeholder="john@example.com">
+                        </div>
+                        <div>
+                            <label for="vcard-organization">Organization:</label>
+                            <input type="text" id="vcard-organization" placeholder="Company Name">
+                        </div>
+                        <div class="full-width">
+                            <label for="vcard-address">Address:</label>
+                            <textarea id="vcard-address" placeholder="123 Main St, City, State, ZIP"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wi-Fi Input -->
+                <div class="input-form" id="wifi-form" style="display: none;">
+                    <div class="form-grid">
+                        <div>
+                            <label for="wifi-ssid">Network Name (SSID):</label>
+                            <input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork">
+                        </div>
+                        <div>
+                            <label for="wifi-password">Password:</label>
+                            <input type="password" id="wifi-password" placeholder="password123">
+                        </div>
+                        <div>
+                            <label for="wifi-security">Security Type:</label>
+                            <select id="wifi-security">
+                                <option value="WPA">WPA/WPA2</option>
+                                <option value="WEP">WEP</option>
+                                <option value="nopass">Open (No Password)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="wifi-hidden">
+                                <input type="checkbox" id="wifi-hidden">
+                                Hidden Network
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customization Options -->
+                <div class="customization-section">
+                    <h3>Customization</h3>
+                    
+                    <div class="customization-grid">
+                        <div class="color-controls">
+                            <label for="fg-color">Foreground Color:</label>
+                            <input type="color" id="fg-color" value="#000000">
+                        </div>
+                        
+                        <div class="color-controls">
+                            <label for="bg-color">Background Color:</label>
+                            <input type="color" id="bg-color" value="#ffffff">
+                        </div>
+                        
+                        <div class="logo-upload">
+                            <label for="logo-upload">Center Logo:</label>
+                            <input type="file" id="logo-upload" accept="image/*">
+                        </div>
+                        
+                        <div class="size-control">
+                            <label for="qr-size">Size:</label>
+                            <select id="qr-size">
+                                <option value="200">Small (200px)</option>
+                                <option value="300" selected>Medium (300px)</option>
+                                <option value="400">Large (400px)</option>
+                                <option value="500">Extra Large (500px)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="generate-btn" class="generate-button">Generate QR Code</button>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-container">
+                    <h3>Preview</h3>
+                    <div id="qr-preview" class="qr-display">
+                        <div class="placeholder">QR Code will appear here</div>
+                    </div>
+                </div>
+
+                <div class="download-section">
+                    <h3>Download Options</h3>
+                    <div class="download-buttons">
+                        <button id="download-png" class="download-btn" disabled>Download PNG</button>
+                        <button id="download-jpg" class="download-btn" disabled>Download JPG</button>
+                        <button id="download-svg" class="download-btn" disabled>Download SVG</button>
+                        <button id="download-print" class="download-btn" disabled>High-Res Print</button>
+                    </div>
+                    
+                    <div class="share-options">
+                        <button id="copy-btn" class="share-btn" disabled>Copy to Clipboard</button>
+                        <button id="share-btn" class="share-btn" disabled>Share</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function loadFallbackQRCode() {
+             console.log('Loading local QRCode library...');
+             const script = document.createElement('script');
+             script.src = 'qrcode-lib.js';
+             script.onload = function() {
+                 console.log('Local QRCode library loaded successfully');
+             };
+             script.onerror = function() {
+                 console.error('Failed to load local QRCode library');
+             };
+             document.head.appendChild(script);
+         }
+         
+         // Try to load the primary QRCode library
+         // Load local QRCode library directly
+         function loadQRCodeLibrary() {
+             console.log('Loading local QRCode library...');
+             const script = document.createElement('script');
+             script.src = 'qrcode-lib.js';
+             script.onload = function() {
+                 console.log('Local QRCode library loaded successfully');
+             };
+             script.onerror = function() {
+                 console.error('Failed to load local QRCode library');
+             };
+             document.head.appendChild(script);
+         }
+         
+         // Load QRCode library when DOM is ready
+         if (document.readyState === 'loading') {
+             document.addEventListener('DOMContentLoaded', loadQRCodeLibrary);
+         } else {
+             loadQRCodeLibrary();
+         }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
