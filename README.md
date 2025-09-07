@@ -33,7 +33,7 @@ This web application provides an intuitive platform for generating QR codes from
 ## Getting Started
 
 ### Live Demo
-Visit the live application at: `[https://your-domain.com`](https://hadia-codes.github.io/QR-generator/)
+Visit the live application at: (https://hadia-codes.github.io/QR-generator/)
 
 ### Local Setup
 1. Clone the repository
